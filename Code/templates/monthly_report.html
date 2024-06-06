@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary - {{ user.username }}</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Order Summary for {{ user.username }}</h2>
+            <p class="card-text">
+                Below is a summary of your orders for {{ month }} {{ year }}:
+            </p>
+
+            <!-- Display order summary in a table -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Category Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total Price</th>
+                    </tr>
+                </thead>
+                {% for order in orders %}
+                <tbody>
+                        <tr>
+                            {% for product in products %}
+                                {% if order.o_product_id == product.product_id %}
+                                    <td> {{product.product_name}} </td>
+                                {% endif%}
+                            {% endfor %}
+                            {% for category in categories %}
+                                {% if order.o_category_id == category.category_id %}
+                                    <td> {{category.category_name}}</td>
+                                {% endif%}
+                            {% endfor %}
+                            <td> {{order.o_quantity}} </td>
+                            <td> {{order.o_price}} INR</td> 
+                            <td> <b> {{order.o_totalprice}} INR</b> </td>
+                        </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+
+            <p class="card-text">
+                Your total expenditure for this month: <b> {{ totalvalue }} INR</b>
+            </p>
+
+            <p class="card-text">
+                Thank you for choosing our services. If you have any questions, feel free to contact us.
+            </p>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>
